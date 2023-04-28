@@ -23,3 +23,20 @@
     (let [isbn   (:isbn book)
           copies (:copies book)]
       (assoc book :available (< (number-of-lendings isbn) copies)))))
+
+;; (insert-book! {:title "Misery" :isbn "1501156748"})
+;; (insert-book! {:title "The Shining" :isbn "0345806786"})
+
+;; (add-book-item! {:book-id 1})
+;; (add-book-item! {:book-id 2})
+
+;; (checkout-book! {:user-id 1 :book-item-id 1})
+;; (checkout-book! {:user-id 2 :book-item-id 2})
+;; (checkout-book! {:user-id 3 :book-item-id 3})
+;; (checkout-book! {:user-id 4 :book-item-id 4})
+;; (checkout-book! {:user-id 5 :book-item-id 5})
+
+;; (checkout-book! {:user-id 1 :book-item-id 6})
+;; (checkout-book! {:user-id 2 :book-item-id 7})
+
+;; (return-book! {:user-id 5 :book-item-id 5})
