@@ -14,3 +14,12 @@
   (map
    #(medley/map-keys csk/->kebab-case %)
    (search {:title (str "%" (str/lower-case title) "%")})))
+
+(defn update-book-availablity
+  [book]
+  (letfn [(number-of-lendings
+            [isbn]
+            (count (get-book-lendings-by-isbn {:isbn isbn})))]
+    (let [isbn   (:isbn book)
+          copies (:copies book)]
+      (assoc book :available (< (number-of-lendings isbn) copies)))))
