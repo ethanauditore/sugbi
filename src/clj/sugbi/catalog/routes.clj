@@ -11,6 +11,7 @@
 
 (def book-info-spec
   {:isbn                         string?
+   :copies                       int?
    :available                    boolean?
    (ds/opt :title)               string?
    (ds/opt :full-title)          string?
