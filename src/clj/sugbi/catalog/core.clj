@@ -19,27 +19,28 @@
 (defn get-book
   [isbn fields]
   (when-let [db-book (db/get-book {:isbn isbn})]
-    (let [open-library-book-info (olb/book-info isbn fields)]
-      (merge db-book open-library-book-info))))
-
+    (let [open-library-book-info (olb/book-info isbn fields)
+          updated-db-book        (db/update-book-availablity db-book)]
+      (merge updated-db-book open-library-book-info))))
 
 (defn get-books
   [fields]
   (let [db-books                (db/get-books {})
         isbns                   (map :isbn db-books)
-        open-library-book-infos (olb/multiple-book-info isbns fields)]
+        open-library-book-infos (olb/multiple-book-info isbns fields)
+        updated-db-books        (map db/update-book-availablity db-books)]
     (merge-on-key
      :isbn
-     db-books
+     updated-db-books
      open-library-book-infos)))
-
 
 (defn enriched-search-books-by-title
   [title fields]
   (let [db-book-infos           (db/matching-books title)
         isbns                   (map :isbn db-book-infos)
-        open-library-book-infos (olb/multiple-book-info isbns fields)]
+        open-library-book-infos (olb/multiple-book-info isbns fields)
+        updated-db-book-infos   (map db/update-book-availablity db-book-infos)]
     (merge-on-key
      :isbn
-     db-book-infos
+     updated-db-book-infos
      open-library-book-infos)))
