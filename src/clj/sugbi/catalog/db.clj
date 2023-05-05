@@ -24,6 +24,30 @@
           copies (:copies book)]
       (assoc book :available (< (number-of-lendings isbn) copies)))))
 
+(defn book-lendings
+  [book-item-id]
+  (mapv
+   #(medley/map-keys csk/->kebab-case %)
+   (get-book-lendings {:book-item-id book-item-id})))
+
+(defn book-lendings-by-user
+  [user-id]
+  (mapv
+   #(medley/map-keys csk/->kebab-case %)
+   (get-book-lendings-by-user {:user-id user-id})))
+
+(defn book-items-by-isbn
+  [isbn]
+  (mapv
+   #(medley/map-keys csk/->kebab-case %)
+   (get-book-items-by-isbn {:isbn isbn})))
+
+(defn create-lending
+  [user-id book-item-id]
+  (medley/map-keys
+   csk/->kebab-case
+   (checkout-book! {:user-id user-id :book-item-id book-item-id})))
+
 ;; (insert-book! {:title "Misery" :isbn "1501156748"})
 ;; (insert-book! {:title "The Shining" :isbn "0345806786"})
 
