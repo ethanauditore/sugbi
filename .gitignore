@@ -21,3 +21,4 @@ pom.xml.asc
 .shadow-cljs
 .calva
 node_modules
+dev-config.edn
