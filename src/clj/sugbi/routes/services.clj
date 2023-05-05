@@ -47,4 +47,5 @@
             {:url "/api/swagger.json"
              :config {:validator-url nil}})}]]
 
-   catalog.routes/routes])
+   catalog.routes/routes
+   catalog.routes/lending-routes])
