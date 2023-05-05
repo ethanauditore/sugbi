@@ -44,3 +44,17 @@
      :isbn
      updated-db-book-infos
      open-library-book-infos)))
+
+(defn book-item-id-match-isbn?
+  [book-item-id book-item-by-isbn]
+  (some true? (mapv #(some-> % :book-item-id (= book-item-id)) book-item-by-isbn)))
+
+(defn is-borrowed?
+  [book-item-id]
+  (let [book-lendings (db/book-lendings book-item-id)]
+    (some #(nil? (:return-date %)) book-lendings)))
+
+(defn is-borrowed-by-user?
+  [book-item-id user-id]
+  (let [book-lendings (db/book-lendings book-item-id)]
+    (= user-id (:user-id (first (filterv #(nil? (:return-date %)) book-lendings))))))
